@@ -1,0 +1,30 @@
+<h2>Make Booking</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>Guest:</label>
+        <select name="guest_id" required>
+            <option value="">Select Guest</option>
+            <% guests.forEach(guest => { %>
+                <option value="<%= guest.id %>"><%= guest.name %> - <%= guest.email %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Room:</label>
+        <select name="room_id" required>
+            <option value="">Select Room</option>
+            <% rooms.forEach(room => { %>
+                <option value="<%= room.id %>"><%= room.category %> - $<%= room.price_per_night %>/night</option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Check-in Date:</label>
+        <input type="date" name="check_in_date" required>
+    </div>
+    <div class="form-group">
+        <label>Check-out Date:</label>
+        <input type="date" name="check_out_date" required>
+    </div>
+    <button type="submit">Create Booking</button>
+</form>

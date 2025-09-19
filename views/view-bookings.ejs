@@ -1,0 +1,36 @@
+<h2>All Bookings</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Guest</th>
+            <th>Room</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% bookings.forEach(booking => { %>
+        <tr>
+            <td><%= booking.id %></td>
+            <td><%= booking.guest_name %></td>
+            <td><%= booking.room_category %></td>
+            <td><%= new Date(booking.check_in_date).toLocaleDateString() %></td>
+            <td><%= new Date(booking.check_out_date).toLocaleDateString() %></td>
+            <td>$<%= booking.total_amount %></td>
+            <td><span class="status <%= booking.status %>"><%= booking.status %></span></td>
+            <td>
+                <a href="/bookings/voucher/<%= booking.id %>" class="btn-small">Voucher</a>
+                <% if (booking.status === 'confirmed') { %>
+                    <form method="POST" action="/bookings/<%= booking.id %>/cancel" style="display:inline;">
+                        <button type="submit" class="btn-small cancel">Cancel</button>
+                    </form>
+                <% } %>
+            </td>
+        </tr>
+        <% }); %>
+    </tbody>
+</table>
