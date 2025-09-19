@@ -25,6 +25,17 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err.stack);
+    res.status(500).render('error', { message: 'Something went wrong!' });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).render('error', { message: 'Page not found' });
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

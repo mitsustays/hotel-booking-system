@@ -1,7 +1,10 @@
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env."postgresql://mitsustays_db_user:B66uLw6aDJPN3upLs3swmUWTJ7vVAX9l@dpg-d36mqbvdiees73bvgqr0-a.oregon-postgres.render.com/mitsustays_db",
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-});
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-module.exports = pool;
+// Use in-memory database for Render to avoid file system issues
+const db = new sqlite3.Database(process.env.NODE_ENV === 'production' ? ':memory:' : path.join(__dirname, 'database.sqlite'));
+
+// Enable foreign keys
+db.run('PRAGMA foreign_keys = ON');
+
+module.exports = db;
